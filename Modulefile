@@ -1,0 +1,10 @@
+name    'rvdv-hhvm'
+version '1.0.0'
+source  'https://github.com/RobinvdVleuten/puppet-hhvm'
+author  'Robin van der Vleuten'
+license 'MIT'
+summary 'Puppet module for installing HHVM on Ubuntu Precise.'
+description 'Puppet module for installing HHVM on Ubuntu Precise.'
+project_page 'https://github.com/RobinvdVleuten/puppet-hhvm'
+
+dependency 'puppetlabs/apt', '1.3.x'
