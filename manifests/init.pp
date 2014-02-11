@@ -1,4 +1,10 @@
-class hhvm() {
+class hhvm(
+  $port 					= 80,
+  $sourceRoot 				= "/var/www/",
+  $logLevel					= "warning",
+  $maxPostSizeMb			= 10,
+  $requestTimeoutSeconds	= 30
+) {
   validate_re($::osfamily, '^Debian$', 'This module uses the docker apt repo and only works on Debian systems that support it.')
 
   include apt
@@ -29,5 +35,10 @@ class hhvm() {
   package { 'hiphop-php':
     ensure  => 'present',
     require => [ Apt::Source['hhvm'], Apt::Source['hhvm_universe'], File['/etc/apt/apt.conf.d/hhvm'] ],
+  }
+
+  file { '/etc/hhvm/server.hdf':
+    content => template('hhvm/server.hdf.erb'),
+    require => Package['hiphop-php']
   }
 }
