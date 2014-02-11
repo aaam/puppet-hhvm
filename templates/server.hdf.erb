@@ -1,0 +1,62 @@
+PidFile = /var/run/hhvm/pid
+
+Server {
+	Port = <%= @port %>
+	SourceRoot = <%= @sourceRoot %>
+	DefaultDocument = index.php
+
+	# HTTP settings
+	GzipCompressionLevel = 3
+	EnableMagicQuotesGpc = false
+	EnableKeepAlive = true
+	EnableEarlyFlush = true
+	ForceChunkedEncoding = false
+
+	# maximum POST Content-Length
+	MaxPostSize = <%= @maxPostSizeMb %>
+
+	LibEventSyncSend = true
+	ResponseQueueCount = 0
+
+	RequestTimeoutSeconds = <%= @requestTimeoutSeconds %>
+	RequestMemoryMaxBytes = 0
+
+}
+
+Log {
+	Level = <%= @logLevel %>
+	AlwaysLogUnhandledExceptions = true
+	RuntimeErrorReportingLevel = 8191
+	UseLogFile = true
+	UseSyslog = false
+	File = /var/log/hhvm/error.log
+	Access {
+		* {
+			File = /var/log/hhvm/access.log
+			Format = %h %l %u % t \"%r\" %>s %b
+		}
+	}
+}
+
+Repo {
+	Central {
+		Path = /var/log/hhvm/.hhvm.hhbc
+	}
+}
+
+#include "/usr/share/hhvm/hdf/static.mime-types.hdf"
+StaticFile {
+	FilesMatch {
+		* {
+			pattern = .*\.(dll|exe)
+			headers {
+				* = Content-Disposition: attachment
+			}
+		}
+	}
+	Extensions : StaticMimeTypes
+}
+
+MySQL {
+	TypedResults = false
+}
