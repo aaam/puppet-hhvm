@@ -1,9 +1,9 @@
 class hhvm(
-  $port 					= 80,
-  $sourceRoot 				= "/var/www/",
-  $logLevel					= "warning",
-  $maxPostSizeMb			= 10,
-  $requestTimeoutSeconds	= 30
+  $port 					       = 80,
+  $sourceRoot 				   = "/var/www/",
+  $logLevel					     = "warning",
+  $maxPostSizeMb			   = 10,
+  $requestTimeoutSeconds = 30
 ) {
   validate_re($::osfamily, '^Debian$', 'This module uses the docker apt repo and only works on Debian systems that support it.')
 
